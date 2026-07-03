@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "keybinds": {
+    "messages_half_page_up": "ctrl+u",
+    "messages_half_page_down": "ctrl+d",
+    "messages_last": "ctrl+l",
+    "messages_first": "ctrl+g",
+    "messages_previous": "ctrl+k",
+    "messages_next": "ctrl+n",
+  }
+}
