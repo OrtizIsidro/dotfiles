@@ -1,0 +1,6 @@
+require("binds")
+require("input")
+require("decorations")
+require("windows")
+require("misc")
+require("monitors")

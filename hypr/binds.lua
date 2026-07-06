@@ -1,0 +1,81 @@
+local mainMod     = "SUPER" -- Sets "Windows" key as main modifier
+local terminal    = "kitty tmux"
+local fileManager = "dolphin"
+local menu        = "wofi --show drun"
+---------------------
+---- KEYBINDINGS ----
+---------------------
+---done
+
+hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
+local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
+hl.bind(mainMod .. " + M",
+  hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- dwindle only
+
+-- Mover foco con Hyper (Bloq Mayús) solo
+hl.bind("MOD3 + h", hl.dsp.focus({ direction = "left" }))
+hl.bind("MOD3 + l", hl.dsp.focus({ direction = "right" }))
+hl.bind("MOD3 + k", hl.dsp.focus({ direction = "up" }))
+hl.bind("MOD3 + j", hl.dsp.focus({ direction = "down" }))
+
+-- Cambiar de workspace con Hyper + Alt + [u-slash]
+-- Mover ventana activa a un workspace con Hyper + Alt + SHIFT + [u-slash]
+local numberToLetter = { "u", "i", "o", "j", "k", "l", "m", "comma", "period", "slash" }
+
+
+for i = 1, 10 do
+  local pos = (i == 10) and 10 or i
+  local key = numberToLetter[pos]
+  hl.bind("MOD3 + ALT + " .. key, hl.dsp.focus({ workspace = i }))
+  hl.bind("MOD3 + ALT + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+end
+
+
+-- Example special workspace (scratchpad)
+hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+
+-- Scroll through existing workspaces with mainMod + scroll
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+
+-- Move/resize windows with mainMod + LMB/RMB and dragging
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- Laptop multimedia keys for volume and LCD brightness
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+  { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+  { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+
+-- Requires playerctl
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
+
+-- Ctrl + Alt + hjkl => Ctrl + flechas (saltar palabra por palabra)
+hl.bind("CTRL + ALT + h", hl.dsp.send_shortcut({ mods = "CTRL", key = "left" }), { repeating = true })
+hl.bind("CTRL + ALT + l", hl.dsp.send_shortcut({ mods = "CTRL", key = "right" }), { repeating = true })
+hl.bind("CTRL + ALT + k", hl.dsp.send_shortcut({ mods = "CTRL", key = "up" }), { repeating = true })
+hl.bind("CTRL + ALT + j", hl.dsp.send_shortcut({ mods = "CTRL", key = "down" }), { repeating = true })
+
+-- Alt + Shift + hjkl => Ctrl + Shift + flechas (seleccionar palabra por palabra)
+hl.bind("ALT + SHIFT + h", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "left" }), { repeating = true })
+hl.bind("ALT + SHIFT + l", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "right" }), { repeating = true })
+hl.bind("ALT + SHIFT + k", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "up" }), { repeating = true })
+hl.bind("ALT + SHIFT + j", hl.dsp.send_shortcut({ mods = "CTRL + SHIFT", key = "down" }), { repeating = true })
+
+-- Movimiento simple (una letra/línea)
+hl.bind("ALT + h", hl.dsp.send_shortcut({ mods = "", key = "left" }), { repeating = true })
+hl.bind("ALT + l", hl.dsp.send_shortcut({ mods = "", key = "right" }), { repeating = true })
+hl.bind("ALT + k", hl.dsp.send_shortcut({ mods = "", key = "up" }), { repeating = true })
+hl.bind("ALT + j", hl.dsp.send_shortcut({ mods = "", key = "down" }), { repeating = true })
