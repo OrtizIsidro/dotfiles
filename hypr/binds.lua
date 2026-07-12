@@ -1,39 +1,47 @@
 local mainMod     = "SUPER" -- Sets "Windows" key as main modifier
-local terminal    = "kitty tmux"
+
+--programs
+local terminal    = "kitty"
 local fileManager = "dolphin"
 local menu        = "wofi --show drun"
----------------------
----- KEYBINDINGS ----
----------------------
----done
+local browser     = "firefox"
+local editor      = "neovide"
 
-hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd(terminal))
-local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + M",
+
+hl.bind(mainMod .. " + comma", hl.dsp.window.close())
+
+hl.bind(mainMod .. " + U", hl.dsp.exec_cmd(editor))
+hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + J", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(fileManager))
+
+hl.bind(mainMod .. " + L",
   hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + SHIFT + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
--- Mover foco con Hyper (Bloq Mayús) solo
-hl.bind("MOD3 + h", hl.dsp.focus({ direction = "left" }))
-hl.bind("MOD3 + l", hl.dsp.focus({ direction = "right" }))
-hl.bind("MOD3 + k", hl.dsp.focus({ direction = "up" }))
-hl.bind("MOD3 + j", hl.dsp.focus({ direction = "down" }))
+hl.bind("MOD3 + ALT + h", hl.dsp.focus({ direction = "left" }))
+hl.bind("MOD3 + ALT + l", hl.dsp.focus({ direction = "right" }))
+hl.bind("MOD3 + ALT + k", hl.dsp.focus({ direction = "up" }))
+hl.bind("MOD3 + ALT + j", hl.dsp.focus({ direction = "down" }))
 
+
+
+
+-- workspaces
 -- Cambiar de workspace con Hyper + Alt + [u-slash]
 -- Mover ventana activa a un workspace con Hyper + Alt + SHIFT + [u-slash]
 local numberToLetter = { "u", "i", "o", "j", "k", "l", "m", "comma", "period", "slash" }
-
-
 for i = 1, 10 do
   local pos = (i == 10) and 10 or i
   local key = numberToLetter[pos]
-  hl.bind("MOD3 + ALT + " .. key, hl.dsp.focus({ workspace = i }))
-  hl.bind("MOD3 + ALT + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+  hl.bind("MOD3 +  " .. key, hl.dsp.focus({ workspace = i }))
+  hl.bind("MOD3 +  SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+
+
+
+
 
 
 -- Example special workspace (scratchpad)
