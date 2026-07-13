@@ -1,6 +1,8 @@
 return {
   "folke/snacks.nvim",
   opts = {
+    animate = { enabled = false },
+    scroll = { enabled = false },
     picker = {
       exclude = {
         "node_modules",
@@ -9,24 +11,21 @@ return {
         "dist",
       },
       layout = {
-        preset = "ivy", -- Options: "default", "dropdown", "ivy", "telescope"
-        -- Customize layout details
+        preset = "ivy",
         layout = {
           box = "vertical",
           width = 0.8,
           min_width = 80,
           height = 0.8,
-          border = "rounded", -- "none", "single", "double", "rounded"
+          border = "rounded",
         },
       },
       sources = {
         explorer = {
-          -- Use a centered layout preset instead of the default sidebar
           layout = {
-            preset = "ivy", -- Try "dropdown" or "default" for different centered looks
-            -- Optional: further refine the float dimensions
+            preset = "ivy",
             width = 0.8,
-            height = 0.9,
+            height = 0.8,
           },
           jump = {
             close = true,
