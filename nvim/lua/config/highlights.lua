@@ -2,6 +2,7 @@ local function transparent_bg(group, link)
   local target = link or group
   local hl = vim.api.nvim_get_hl(0, { name = target, link = true })
   hl.bg = "none"
+  hl.link = nil
   vim.api.nvim_set_hl(0, group, hl)
 end
 
@@ -16,6 +17,8 @@ local groups = {
 
 local groups_with_link = {
   { "SnacksPickerDirectory", "Directory" },
+  { "SnacksPickerFile", "Normal" },
+  { "SnacksPickerDir", "Normal" },
   { "SnacksPickerBorder", "FloatBorder" },
   { "SnacksPickerBoxBorder", "SnacksPickerBorder" },
   { "SnacksPickerTitle", "FloatTitle" },

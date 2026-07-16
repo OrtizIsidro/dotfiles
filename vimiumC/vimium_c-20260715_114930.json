@@ -1,0 +1,17 @@
+{
+	"name": "Vimium C",
+	"@time": "7/15/2026, 11:49:30 AM",
+	"time": 1784126970874,
+	"environment": {
+		"extension": "2.12.3",
+		"platform": "linux",
+		"firefox": 152
+	},
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"map T Vomnibar.activateTabSelection currentWindow",
+		""
+	],
+	"vimSync": true
+}
